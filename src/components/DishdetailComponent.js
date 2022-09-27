@@ -5,7 +5,6 @@ class DishDetail extends Component{
 
     constructor(props){
         super(props);
-        console.log("HELLO WORLD",this.props.dishDetail)
     }
 
 
