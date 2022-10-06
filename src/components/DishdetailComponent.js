@@ -5,7 +5,6 @@ class DishDetail extends Component{
 
     constructor(props){
         super(props);
-        console.log("HELLO WORLD",this.props.dishDetail)
     }
 
 
@@ -28,10 +27,10 @@ class DishDetail extends Component{
       if(comments!=null){  
         const result=comments.comments.map((comment)=>{
             return(
-                <li key={comment.id} >
-                    <p>{comment.comment}</p>
+                <div key={comment.id} >
+                    {/* <p>{new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</p> */}
                     <span>--{comment.author}</span>
-                </li>
+                </div>
                 
             )
         })
@@ -54,7 +53,7 @@ class DishDetail extends Component{
                 <div className="col-12 col-md-5 mt-5">
                     {this.renderDish(this.props.dishDetail)}
                 </div>
-                <div className="col-12 col-md-5 mt-5 m-1">
+                <div className="col-12 col-md-5 mt-5">
                     {this.renderComments(this.props.dishDetail)}
                 </div>
                 
@@ -66,4 +65,4 @@ class DishDetail extends Component{
 
 }
 
-export default DishDetail
+export default DishDetail;
