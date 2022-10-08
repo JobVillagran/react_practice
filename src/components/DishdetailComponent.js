@@ -5,7 +5,7 @@ class DishDetail extends Component {
 
     constructor(props) {
         super(props);
-        
+
         this.state = {
 
         }
@@ -13,34 +13,34 @@ class DishDetail extends Component {
 
     renderDish(dish) {
         if (dish != null)
-            return(
+            return (
                 <div className="col-12 col-md-5 m-1">
                     <Card>
                         <CardImg top src={dish.image} alt={dish.name} />
                         <CardBody>
-                        <CardTitle>{dish.name}</CardTitle>
-                        <CardText>{dish.description}</CardText>
+                            <CardTitle>{dish.name}</CardTitle>
+                            <CardText>{dish.description}</CardText>
                         </CardBody>
                     </Card>
                 </div>
             );
         else
-            return(<div></div>);
+            return (<div></div>);
     }
 
     renderComments(comments = []) {
         if (comments.length > 0 || comments != null) {
             let options = { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric' };
-            comments = comments.map(item =>  {
-                return(
-                    <li key={item.id}>
-                        <p>{item.comment}</p>
-                        <p>-- {item.author}, {new Date(item.date).toLocaleDateString('en-US', options)}</p>
+            comments = comments.map(dish => {
+                return (
+                    <li key={dish.id}>
+                        <p>{dish.comment}</p>
+                        <p>-- {dish.author}, {new Date(dish.date).toLocaleDateString('en-US', options)}</p>
                     </li>
                 )
             });
-            return(
-                <div  className="col-12 col-md-5 m-1">
+            return (
+                <div className="col-12 col-md-5 m-1">
                     <h4>Comments</h4>
                     <ul className='list-unstyled'>
                         {comments}
@@ -48,18 +48,20 @@ class DishDetail extends Component {
                 </div>
             );
         } else
-            return(
+            return (
                 <div></div>
             );
     }
 
     render() {
-        const {dish} = this.props;
+        const { dish } = this.props;
         console.log(dish)
         return (
-            <div className="row">
-                {this.renderDish(dish)}
-                {dish && this.renderComments(dish.comments)}
+            <div className="container">
+                <div className="row">
+                    {this.renderDish(dish)}
+                    {dish && this.renderComments(dish.comments)}
+                </div>
             </div>
         );
     }
