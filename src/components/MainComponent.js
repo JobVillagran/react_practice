@@ -26,10 +26,14 @@ class Main extends Component {
 
     render() {
         const HomePage = () => {
-            return (
-                <Home />
+            return(
+                <Home 
+                    dish={this.state.dishes.filter((dish) => dish.featured)[0]}
+                    promotion={this.state.promotions.filter((promo) => promo.featured)[0]}
+                    leader={this.state.leaders.filter((leader) => leader.featured)[0]}
+                />
             );
-        }
+          }
         return (
             <div>
                 <Header />
