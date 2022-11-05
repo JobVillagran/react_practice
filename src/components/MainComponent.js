@@ -42,11 +42,9 @@ class Main extends Component {
             );
         };
 
-        const AboutUsPage = () => {
+        const AboutUs = () => {
             return(
-                <About 
-                    leaders={this.state.leaders}
-                />
+                <About leaders={this.state.leaders} />
             );
         };
 
@@ -76,7 +74,7 @@ class Main extends Component {
                     <Route path="/menu/:dishId" component={DishWithId} />
 
                     <Route exact path="/contactus" component={Contact } />
-                    <Route exact path="/aboutus" component={ AboutUsPage } />
+                    <Route exact path="/aboutus" component={ AboutUs } />
                    
                     {/* if url dosesnt match, bydefault redirect to */}
                     <Redirect to="/home" />
