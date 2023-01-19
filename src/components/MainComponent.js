@@ -7,14 +7,19 @@ import Contact from './ContactComponent';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
 import DishDetail from './DishdetailComponent';
-
 import { COMMENTS } from '../shared/comments'
 import { DISHES } from '../shared/dishes'
 import { LEADERS } from '../shared/leaders'
 import { PROMOTIONS } from '../shared/promotions'
-
 import { Switch, Route, Redirect } from 'react-router-dom';
+import { addComment } from '../redux/ActionCreators';
 
+
+const mapDispatchToProps = dispatch => ({
+  
+    addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment))
+  
+  });
 
 class Main extends Component {
 
@@ -29,6 +34,7 @@ class Main extends Component {
         };
 
     }
+    
 
     render() {
 
