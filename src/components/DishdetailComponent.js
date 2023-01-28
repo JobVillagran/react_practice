@@ -4,13 +4,9 @@ import { Link } from 'react-router-dom';
 import {
     Button, Modal, ModalBody, ModalHeader, Label, Row, Col
 } from "reactstrap";
-
 import { Control, LocalForm, Errors } from 'react-redux-form';
+import { Loading } from './LoadingComponent';
 
-
-
-
-/**........................ comment component ends ................................................. */
 //// validators
 const required = (val) => val && val.length; //value > 0
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -225,13 +221,35 @@ function RenderComments({comments, addComment, dishId}) {
 
 const DishDetail = (props) => {
 
-    const dish = props.dish
+
+    if (props.isLoading) {
+        return(
+            <div className="container">
+                <div className="row">            
+                    <Loading />
+                </div>
+            </div>
+        );
+    }
+    else if (props.errMess) {
+        return(
+            <div className="container">
+                <div className="row">            
+                    <h4>{props.errMess}</h4>
+                </div>
+            </div>
+        );
+    }
+    else if (props.dish != null) 
 
 
-    if (dish == null) {
+    //const dish = props.dish
+
+
+    if (props.dish == null) {
         return (<div></div>);
     }
-
+    if (props.dish != null)
     return (
         <div className="container">
             <div className="row">
