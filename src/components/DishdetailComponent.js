@@ -158,13 +158,6 @@ class CommentForm extends Component {
 
 /**........................ comment component ends ................................................. */
 
-
-
-
-
-
-
-
 function RenderDish({ dish }) {
     if (dish != null) {
         return (
@@ -241,10 +234,6 @@ const DishDetail = (props) => {
         );
     }
     else if (props.dish != null) 
-
-
-    //const dish = props.dish
-
 
     if (props.dish == null) {
         return (<div></div>);
