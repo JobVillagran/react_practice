@@ -33,25 +33,52 @@ function RenderDish({ dish }) {
         );
     }
 }
+
+function RenderComments({comments, postComment, dishId}) {
+    if (comments == null) {
+        return (<div></div>)
+    }
+    const cmnts = comments.map(comment => {
+        return (
+
+            <li key={comment.id}>
+                <p>{comment.comment}</p>
+                <p>-- {comment.author},
+                    &nbsp;
+                    {new Intl.DateTimeFormat('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: '2-digit'
+                    }).format(new Date(comment.date))}
+                </p>
+            </li>
+
+        )
+    })
+    return (
+        <div className='col-12 col-md-5 m-1'>
+            <h4> Comments </h4>
+            <ul className='list-unstyled'>
+                {cmnts}
+            </ul>
+            <CommentForm dishId={dishId} postComment={postComment} />
+        </div>
+    )
+}
+
 class CommentForm extends Component {
 
     constructor(props) {
         super(props);
 
-
-        this.state = {
-            isCommentFormModalOpen: false
-        };
-
         this.toggleCommentFormModal = this.toggleCommentFormModal.bind(this);
         this.handleCommentFormSubmit = this.handleCommentFormSubmit.bind(this);
 
-    }
+        this.state = {
+            isNavCommentFormModalOpen: false,
+            isCommentFormModalOpen: false
+        };
 
-    handleCommentFormSubmit(values) {
-        // console.log("Current State is: " + JSON.stringify(values));
-        // alert("Current State is: " + JSON.stringify(values));
-        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
     }
 
     toggleCommentFormModal() {
@@ -60,7 +87,12 @@ class CommentForm extends Component {
         });
     }
 
+    handleCommentFormSubmit(values) {
+        this.toggleCommentFormModal();
+        this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
+    }
 
+    
     render() {
         return (
             <React.Fragment>
@@ -181,38 +213,6 @@ class CommentForm extends Component {
 
 
 
-function RenderComments({comments, addComment, dishId}) {
-    if (comments == null) {
-        return (<div></div>)
-    }
-    const cmnts = comments.map(comment => {
-        return (
-
-            <li key={comment.id}>
-                <p>{comment.comment}</p>
-                <p>-- {comment.author},
-                    &nbsp;
-                    {new Intl.DateTimeFormat('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: '2-digit'
-                    }).format(new Date(comment.date))}
-                </p>
-            </li>
-
-        )
-    })
-    return (
-        <div className='col-12 col-md-5 m-1'>
-            <h4> Comments </h4>
-            <ul className='list-unstyled'>
-                {cmnts}
-            </ul>
-            <CommentForm dishId={dishId} addComment={addComment} />
-        </div>
-    )
-}
-
 
 const DishDetail = (props) => {
 
@@ -262,7 +262,7 @@ const DishDetail = (props) => {
             <div className='row'>
                 <RenderDish dish={props.dish} />
                 <RenderComments comments={props.comments}
-                    addComment={props.addComment}
+                    postComment={props.postComment}
                     dishId={props.dish.id}
                 />
             </div>
