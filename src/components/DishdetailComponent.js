@@ -7,6 +7,7 @@ import {
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
 import { baseURL } from '../shared/baseURL';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 //// validators
 const required = (val) => val && val.length; //value > 0
@@ -17,13 +18,18 @@ function RenderDish({ dish }) {
     if (dish != null) {
         return (
             <div className='col-12 col-md-5 m-1'>
-                <Card>
-                    <CardImg width="100%" src={ baseURL + dish.image} alt={dish.name} />
-                    <CardBody>
-                        <CardTitle> {dish.name}</CardTitle>
-                        <CardText> {dish.description} </CardText>
-                    </CardBody>
-                </Card>
+                <FadeTransform in
+                    tranformProps={{
+                        exitTransform: 'scale(0.5) translateY(0.5%)'
+                    }}>
+                    <Card>
+                        <CardImg width="100%" src={baseURL + dish.image} alt={dish.name} />
+                        <CardBody>
+                            <CardTitle> {dish.name}</CardTitle>
+                            <CardText> {dish.description} </CardText>
+                        </CardBody>
+                    </Card>
+                </FadeTransform>
             </div>
         );
     }
@@ -34,7 +40,7 @@ function RenderDish({ dish }) {
     }
 }
 
-function RenderComments({comments, postComment, dishId}) {
+function RenderComments({ comments, postComment, dishId }) {
     if (comments == null) {
         return (<div></div>)
     }
@@ -59,7 +65,11 @@ function RenderComments({comments, postComment, dishId}) {
         <div className='col-12 col-md-5 m-1'>
             <h4> Comments </h4>
             <ul className='list-unstyled'>
-                {cmnts}
+                <Stagger in>
+                    <Fade in>
+                        {cmnts}
+                    </Fade>
+                </Stagger>
             </ul>
             <CommentForm dishId={dishId} postComment={postComment} />
         </div>
@@ -92,7 +102,7 @@ class CommentForm extends Component {
         this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
     }
 
-    
+
     render() {
         return (
             <React.Fragment>
@@ -218,58 +228,58 @@ const DishDetail = (props) => {
 
 
     if (props.isLoading) {
-        return(
+        return (
             <div className="container">
-                <div className="row">            
+                <div className="row">
                     <Loading />
                 </div>
             </div>
         );
     }
     else if (props.errMess) {
-        return(
+        return (
             <div className="container">
-                <div className="row">            
+                <div className="row">
                     <h4>{props.errMess}</h4>
                 </div>
             </div>
         );
     }
-    else if (props.dish != null) 
+    else if (props.dish != null)
 
-    if (props.dish == null) {
-        return (<div></div>);
-    }
+        if (props.dish == null) {
+            return (<div></div>);
+        }
     if (props.dish != null)
-    return (
-        <div className="container">
-            <div className="row">
-                <Breadcrumb>
-                    <BreadcrumbItem>
-                        <Link to="/menu">Menu</Link>
-                    </BreadcrumbItem>
-                    <BreadcrumbItem active>
-                        {props.dish.name}
-                    </BreadcrumbItem>
-                </Breadcrumb>
+        return (
+            <div className="container">
+                <div className="row">
+                    <Breadcrumb>
+                        <BreadcrumbItem>
+                            <Link to="/menu">Menu</Link>
+                        </BreadcrumbItem>
+                        <BreadcrumbItem active>
+                            {props.dish.name}
+                        </BreadcrumbItem>
+                    </Breadcrumb>
 
-                <div className="col-12">
-                    <h3> {props.dish.menu}</h3>
-                    <hr />
+                    <div className="col-12">
+                        <h3> {props.dish.menu}</h3>
+                        <hr />
+                    </div>
                 </div>
+
+                <div className='row'>
+                    <RenderDish dish={props.dish} />
+                    <RenderComments comments={props.comments}
+                        postComment={props.postComment}
+                        dishId={props.dish.id}
+                    />
+                </div>
+
+
             </div>
-
-            <div className='row'>
-                <RenderDish dish={props.dish} />
-                <RenderComments comments={props.comments}
-                    postComment={props.postComment}
-                    dishId={props.dish.id}
-                />
-            </div>
-
-
-        </div>
-    )
+        )
 }
 
 
