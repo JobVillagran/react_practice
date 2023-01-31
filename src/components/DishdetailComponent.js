@@ -6,12 +6,33 @@ import {
 } from "reactstrap";
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { Loading } from './LoadingComponent';
+import { baseURL } from '../shared/baseURL';
 
 //// validators
 const required = (val) => val && val.length; //value > 0
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => (val) && (val.length >= len);
 
+function RenderDish({ dish }) {
+    if (dish != null) {
+        return (
+            <div className='col-12 col-md-5 m-1'>
+                <Card>
+                    <CardImg width="100%" src={ baseURL + dish.image} alt={dish.name} />
+                    <CardBody>
+                        <CardTitle> {dish.name}</CardTitle>
+                        <CardText> {dish.description} </CardText>
+                    </CardBody>
+                </Card>
+            </div>
+        );
+    }
+    else {
+        return (
+            <div></div>
+        );
+    }
+}
 class CommentForm extends Component {
 
     constructor(props) {
@@ -158,26 +179,7 @@ class CommentForm extends Component {
 
 /**........................ comment component ends ................................................. */
 
-function RenderDish({ dish }) {
-    if (dish != null) {
-        return (
-            <div className='col-12 col-md-5 m-1'>
-                <Card>
-                    <CardImg width="100%" src={dish.image} alt={dish.name} />
-                    <CardBody>
-                        <CardTitle> {dish.name}</CardTitle>
-                        <CardText> {dish.description} </CardText>
-                    </CardBody>
-                </Card>
-            </div>
-        );
-    }
-    else {
-        return (
-            <div></div>
-        );
-    }
-}
+
 
 function RenderComments({comments, addComment, dishId}) {
     if (comments == null) {

@@ -1,0 +1,6 @@
+To activate the server: json-server --watch db.json -d 2000 -p 3001
+
+Should be done on the folder we created the server
+
+Here we are using as example the same project, but we can have the Folder for the server in another location
+in our computer.
